@@ -78,7 +78,6 @@
 
         /* ---------- Scroll Handlers (header, nav highlight, back to top) ---------- */
         const header = document.getElementById('header');
-        const backToTop = document.getElementById('back-to-top');
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-link');
 
@@ -104,7 +103,6 @@
             const y = window.pageYOffset;
 
             if (header) header.classList.toggle('scrolled', y > 50);
-            if (backToTop) backToTop.classList.toggle('visible', y > 400);
 
             highlightNav();
         }
@@ -121,12 +119,6 @@
         }, { passive: true });
 
         onScroll();
-
-        if (backToTop) {
-            backToTop.addEventListener('click', function () {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
 
         /* ---------- WhatsApp Shipment Enquiries ---------- */
         const trackForm = document.getElementById('track-form');
@@ -184,32 +176,6 @@
                 });
             }
         }
-
-        /* ---------- FAQ Accordion ---------- */
-        const faqItems = document.querySelectorAll('.faq-item');
-
-        faqItems.forEach(function (item) {
-            const question = item.querySelector('.faq-question');
-            if (!question) return;
-
-            question.setAttribute('aria-expanded', 'false');
-
-            question.addEventListener('click', function () {
-                const willOpen = !item.classList.contains('active');
-
-                // Close all others so only one is open at a time
-                faqItems.forEach(function (other) {
-                    other.classList.remove('active');
-                    const q = other.querySelector('.faq-question');
-                    if (q) q.setAttribute('aria-expanded', 'false');
-                });
-
-                if (willOpen) {
-                    item.classList.add('active');
-                    question.setAttribute('aria-expanded', 'true');
-                }
-            });
-        });
 
         /* ---------- Quote Request via WhatsApp ---------- */
         function setFieldError(field, message) {
@@ -321,27 +287,17 @@
             window.requestAnimationFrame(frame);
         }
 
-        /* ---------- Reveal on Scroll + Counter Trigger ---------- */
-        const revealEls = document.querySelectorAll('.reveal');
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        if ('IntersectionObserver' in window && !reduceMotion) {
-            const observer = new IntersectionObserver(function (entries) {
+        /* ---------- Counter Trigger ---------- */
+        if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const counterObserver = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
                     if (!entry.isIntersecting) return;
-                    entry.target.classList.add('visible');
-                    if (entry.target.hasAttribute('data-count')) animateCounter(entry.target);
-                    observer.unobserve(entry.target);
+                    animateCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
                 });
             }, { threshold: 0.15 });
-
-            revealEls.forEach(function (el) { observer.observe(el); });
-            counters.forEach(function (el) {
-                if (!el.classList.contains('reveal')) observer.observe(el);
-            });
+            counters.forEach(function (el) { counterObserver.observe(el); });
         } else {
-            // No observer support or reduced motion: show everything immediately
-            revealEls.forEach(function (el) { el.classList.add('visible'); });
             counters.forEach(function (el) {
                 el.textContent = (parseFloat(el.getAttribute('data-count')) || 0)
                     .toLocaleString() + (el.getAttribute('data-suffix') || '');
