@@ -102,10 +102,11 @@
         <div class="container">
             <div class="track-box">
                 <h2><i class="fas fa-search-location" aria-hidden="true"></i> Track Your Shipment</h2>
-                <p class="track-intro">Enter your tracking number and request the latest shipment update directly from our team on WhatsApp.</p>
+                <p class="track-intro">Enter your tracking number. WhatsApp will open with the number pre-filled, and our team will reply with your shipment status. Live online tracking is coming soon.</p>
                 <form class="track-form" id="track-form" novalidate>
                     <label for="tracking-number" class="sr-only">Tracking Number</label>
-                    <input type="text" id="tracking-number" name="tracking" placeholder="Enter your tracking number" required autocomplete="off" aria-describedby="tracking-help">
+                    <input type="text" id="tracking-number" name="tracking" placeholder="Enter your tracking number" required autocomplete="off" aria-describedby="tracking-help tracking-error">
+                    <span id="tracking-error" class="error-message hidden" role="alert"></span>
                     <span id="tracking-help" class="sr-only">Your WhatsApp message will be prepared for you to review and send.</span>
                     <button type="submit" class="btn btn-primary">Track Now</button>
                 </form>
@@ -271,8 +272,12 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="details">Cargo Details / Message</label>
+                            <label for="details">Cargo Details</label>
                             <textarea id="details" name="details" rows="4" placeholder="Describe your cargo (type, weight, dimensions, special requirements...)"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="3" placeholder="Any additional information or questions..."></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block" id="quote-submit-btn">
                             <span class="btn-text">Submit Quote Request</span>
@@ -385,7 +390,7 @@
     </footer>
 
     <!-- Floating WhatsApp -->
-    <a href="https://wa.me/233244850253" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+    <a href="https://wa.me/233244850253" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
         <i class="fab fa-whatsapp" aria-hidden="true"></i>
     </a>
 
