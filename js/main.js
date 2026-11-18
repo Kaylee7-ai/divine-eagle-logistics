@@ -158,8 +158,8 @@
                     trackingError.classList.add('hidden');
                 }
 
-                const message = 'Hello Divine Eagle Logistics, I would like an update on my shipment.\\n\\nTracking number: ' +
-                    trackingNumber + '\\n\\nPlease share the latest shipment status.';
+                const message = 'Hello Divine Eagle Logistics, I would like an update on my shipment.\n\nTracking number: ' +
+                    trackingNumber + '\n\nPlease share the latest shipment status.';
                 openWhatsAppMessage(message);
                 trackResult.classList.remove('hidden');
                 trackResult.textContent = 'WhatsApp has opened with your request. Please press Send to complete it.';
@@ -217,7 +217,7 @@
             return true;
         }
 
-        document.querySelectorAll('#quote-form, #contact-form').forEach(function (form) {
+        document.querySelectorAll('#quote-form').forEach(function (form) {
             const fields = form.querySelectorAll('input, select, textarea');
             fields.forEach(function (field) {
                 field.addEventListener('blur', function () { validateField(field); });
