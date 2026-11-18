@@ -128,32 +128,33 @@
             });
         }
 
-        /* ---------- Tracking Form (Demo) ---------- */
+        /* ---------- WhatsApp Shipment Enquiries ---------- */
         const trackForm = document.getElementById('track-form');
         const trackResult = document.getElementById('track-result');
+        const WHATSAPP_NUMBER = '233244850253';
+
+        function openWhatsAppMessage(message) {
+            const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
 
         if (trackForm && trackResult) {
             trackForm.addEventListener('submit', function (e) {
                 e.preventDefault();
-
                 const input = document.getElementById('tracking-number');
                 if (!input) return;
                 const trackingNumber = (input.value || '').trim();
-
                 if (!trackingNumber) {
                     input.focus();
+                    input.setAttribute('aria-invalid', 'true');
                     return;
                 }
-
+                input.removeAttribute('aria-invalid');
+                const message = 'Hello Divine Eagle Logistics, I would like an update on my shipment.\n\nTracking number: ' +
+                    trackingNumber + '\n\nPlease share the latest status. Thank you.';
+                openWhatsAppMessage(message);
                 trackResult.classList.remove('hidden');
-                trackResult.innerHTML =
-                    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">' +
-                    '<i class="fas fa-info-circle" style="color:#0066cc;font-size:1.4rem;"></i>' +
-                    '<strong>Tracking Number: ' + escapeHtml(trackingNumber) + '</strong>' +
-                    '</div>' +
-                    '<p style="color:#666;margin-bottom:8px;">This is a demonstration tracking result.</p>' +
-                    '<p style="color:#666;">For live shipment updates, please contact our team on ' +
-                    'WhatsApp or request a quote below.</p>';
+                trackResult.textContent = 'Your WhatsApp message is ready. Review the tracking number and tap Send in WhatsApp to contact our team.';
             });
         }
 
@@ -183,15 +184,10 @@
             });
         });
 
-        /* ---------- Quote / Contact Forms ---------- */
-        // Optional: paste a form-handler URL here (e.g. Formspree) to receive
-        // submissions by email. While empty, the form runs in demo mode.
-        const FORM_ENDPOINT = '';
-
+        /* ---------- Quote Request via WhatsApp ---------- */
         function setFieldError(field, message) {
             field.classList.add('error');
             field.setAttribute('aria-invalid', 'true');
-
             let msg = field.parentNode.querySelector('.error-message');
             if (!msg) {
                 msg = document.createElement('span');
@@ -212,7 +208,6 @@
         function validateField(field) {
             const value = (field.value || '').trim();
             const type = (field.getAttribute('type') || '').toLowerCase();
-
             if (field.hasAttribute('required') && !value) {
                 setFieldError(field, 'This field is required.');
                 return false;
@@ -229,33 +224,8 @@
             return true;
         }
 
-        function showFormMessage(form, type, text) {
-            let box = form.querySelector('.form-message');
-            if (!box) {
-                box = document.createElement('div');
-                box.className = 'form-message';
-                box.setAttribute('role', 'status');
-                box.setAttribute('aria-live', 'polite');
-                form.appendChild(box);
-            }
-            box.className = 'form-message ' + type;
-            box.textContent = text;
-            box.classList.remove('hidden');
-        }
-
-        function setLoading(button, isLoading) {
-            if (!button) return;
-            const text = button.querySelector('.btn-text');
-            const loading = button.querySelector('.btn-loading');
-            button.disabled = isLoading;
-            if (text) text.classList.toggle('hidden', isLoading);
-            if (loading) loading.classList.toggle('hidden', !isLoading);
-        }
-
         document.querySelectorAll('#quote-form, #contact-form').forEach(function (form) {
             const fields = form.querySelectorAll('input, select, textarea');
-            const submitBtn = form.querySelector('button[type="submit"]');
-
             fields.forEach(function (field) {
                 field.addEventListener('blur', function () { validateField(field); });
                 field.addEventListener('input', function () {
@@ -265,47 +235,43 @@
 
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
-
                 let firstInvalid = null;
                 fields.forEach(function (field) {
                     if (field.type === 'hidden' || field.type === 'submit') return;
                     if (!validateField(field) && !firstInvalid) firstInvalid = field;
                 });
-
                 if (firstInvalid) {
                     firstInvalid.focus();
-                    showFormMessage(form, 'error', 'Please fix the highlighted fields and try again.');
                     return;
                 }
 
-                setLoading(submitBtn, true);
+                const values = new FormData(form);
+                const lines = [
+                    'Hello Divine Eagle Logistics, I would like to request a shipping quote.',
+                    '',
+                    'Name: ' + (values.get('name') || ''),
+                    'Company: ' + (values.get('company') || 'Not provided'),
+                    'Email: ' + (values.get('email') || ''),
+                    'Phone: ' + (values.get('phone') || ''),
+                    'Origin: ' + (values.get('origin') || 'Not provided'),
+                    'Destination: ' + (values.get('destination') || 'Not provided'),
+                    'Service: ' + (values.get('service') || 'Not specified'),
+                    'Cargo details: ' + (values.get('details') || 'Not provided'),
+                    '',
+                    'Please review my request and advise on the next steps. Thank you.'
+                ];
+                openWhatsAppMessage(lines.join('\n'));
 
-                const done = function (ok) {
-                    setLoading(submitBtn, false);
-                    if (ok) {
-                        form.reset();
-                        showFormMessage(form, 'success',
-                            'Thank you! Your request has been received. Our team will contact you shortly.');
-                    } else {
-                        showFormMessage(form, 'error',
-                            'Something went wrong. Please try again or contact us on WhatsApp.');
-                    }
-                };
-
-                if (FORM_ENDPOINT) {
-                    fetch(FORM_ENDPOINT, {
-                        method: 'POST',
-                        headers: { 'Accept': 'application/json' },
-                        body: new FormData(form)
-                    }).then(function (res) {
-                        done(res.ok);
-                    }).catch(function () {
-                        done(false);
-                    });
-                } else {
-                    // Demo mode: simulate a short network delay
-                    window.setTimeout(function () { done(true); }, 900);
+                let notice = form.querySelector('.form-message');
+                if (!notice) {
+                    notice = document.createElement('p');
+                    notice.className = 'form-message success';
+                    notice.setAttribute('role', 'status');
+                    notice.setAttribute('aria-live', 'polite');
+                    form.appendChild(notice);
                 }
+                notice.textContent = 'Your quote request is prepared in WhatsApp. Please review the details and tap Send to submit it to our team.';
+                notice.classList.remove('hidden');
             });
         });
 
