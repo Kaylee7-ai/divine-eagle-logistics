@@ -1232,3 +1232,18 @@ textarea.error { border-color: var(--error); }
     .cta-banner .cta-buttons { flex-direction: column; }
     .cta-banner .btn { width: 100%; }
 }
+
+/* Structural hooks used by the existing page markup */
+:where(.top-bar-left, .navbar, .nav-actions, .hero-overlay, .services, .about, .form-success, .contact, .footer-brand, .footer-contact) {
+    /* Layout and appearance are provided by the existing parent/component rules. */
+}
+
+.logo-fallback {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary);
+    font-size: 0.9rem;
+    line-height: 1.25;
+}
+.logo-fallback[hidden] { display: none; }
