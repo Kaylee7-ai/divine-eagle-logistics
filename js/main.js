@@ -244,13 +244,12 @@
                     '',
                     'Name: ' + (values.get('name') || ''),
                     'Company: ' + (values.get('company') || 'Not provided'),
-                    'Email: ' + (values.get('email') || ''),
+                    'Contact phone: ' + (values.get('phone') || ''),
                     'Phone: ' + (values.get('phone') || ''),
                     'Origin: ' + (values.get('origin') || 'Not provided'),
                     'Destination: ' + (values.get('destination') || 'Not provided'),
                     'Service: ' + (values.get('service') || 'Not specified'),
-                    'Cargo details: ' + (values.get('details') || 'Not provided'),
-                    'Message: ' + (values.get('message') || 'Not provided')
+                    'Cargo details / estimated weight or volume: ' + (values.get('details') || 'Not provided')
                 ];
                 openWhatsAppMessage(lines.join('\n'));
 
