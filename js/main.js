@@ -139,23 +139,50 @@
         }
 
         if (trackForm && trackResult) {
+            const input = document.getElementById('tracking-number');
+            const trackingError = document.getElementById('tracking-error');
+
             trackForm.addEventListener('submit', function (e) {
                 e.preventDefault();
-                const input = document.getElementById('tracking-number');
                 if (!input) return;
+
                 const trackingNumber = (input.value || '').trim();
                 if (!trackingNumber) {
-                    input.focus();
+                    input.classList.add('error');
                     input.setAttribute('aria-invalid', 'true');
+                    if (trackingError) {
+                        trackingError.textContent = 'Please enter your tracking number.';
+                        trackingError.classList.remove('hidden');
+                    }
+                    trackResult.classList.add('hidden');
+                    input.focus();
                     return;
                 }
+
+                input.classList.remove('error');
                 input.removeAttribute('aria-invalid');
-                const message = 'Hello Divine Eagle Logistics, I would like an update on my shipment.\n\nTracking number: ' +
-                    trackingNumber + '\n\nPlease share the latest status. Thank you.';
+                if (trackingError) {
+                    trackingError.textContent = '';
+                    trackingError.classList.add('hidden');
+                }
+
+                const message = 'Hello Divine Eagle Logistics, I would like an update on my shipment.\\n\\nTracking number: ' +
+                    trackingNumber + '\\n\\nPlease share the latest shipment status.';
                 openWhatsAppMessage(message);
                 trackResult.classList.remove('hidden');
-                trackResult.textContent = 'Your WhatsApp message is ready. Review the tracking number and tap Send in WhatsApp to contact our team.';
+                trackResult.textContent = 'WhatsApp has opened with your request. Please press Send to complete it.';
             });
+
+            if (input && trackingError) {
+                input.addEventListener('input', function () {
+                    if (input.value.trim()) {
+                        input.classList.remove('error');
+                        input.removeAttribute('aria-invalid');
+                        trackingError.textContent = '';
+                        trackingError.classList.add('hidden');
+                    }
+                });
+            }
         }
 
         /* ---------- FAQ Accordion ---------- */
@@ -257,8 +284,7 @@
                     'Destination: ' + (values.get('destination') || 'Not provided'),
                     'Service: ' + (values.get('service') || 'Not specified'),
                     'Cargo details: ' + (values.get('details') || 'Not provided'),
-                    '',
-                    'Please review my request and advise on the next steps. Thank you.'
+                    'Message: ' + (values.get('message') || 'Not provided')
                 ];
                 openWhatsAppMessage(lines.join('\n'));
 
@@ -270,7 +296,7 @@
                     notice.setAttribute('aria-live', 'polite');
                     form.appendChild(notice);
                 }
-                notice.textContent = 'Your quote request is prepared in WhatsApp. Please review the details and tap Send to submit it to our team.';
+                notice.textContent = 'WhatsApp has opened with your request. Please press Send to complete it.';
                 notice.classList.remove('hidden');
             });
         });
