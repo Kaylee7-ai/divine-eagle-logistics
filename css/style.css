@@ -1646,3 +1646,26 @@ body { color: var(--text); }
 @media (max-width: 380px) {
     .logo-image { width: 68px; height: 68px !important; }
 }
+
+
+/* Growth-focused conversion and agro-export upgrade */
+.hero-location{display:inline-flex;align-items:center;gap:9px;margin:-12px 0 24px!important;padding:9px 14px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(255,255,255,.08);font-size:.9rem!important;color:#e8f5ff!important}
+.hero-whatsapp{margin-top:0;background:#1fbf70;border-color:#1fbf70}.hero-whatsapp:hover{background:#16985a;border-color:#16985a;color:#fff}
+.agro-export{position:relative;overflow:hidden;background:linear-gradient(120deg,#071d33 0%,#103c5b 62%,#0c5872 100%);color:#fff}
+.agro-export-grid{display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:56px}
+.agro-export h2{color:#fff;font-size:clamp(2rem,4vw,2.8rem);line-height:1.16;margin:12px 0 18px;max-width:680px}
+.agro-export-copy>p{color:rgba(255,255,255,.84);font-size:1.04rem;max-width:680px;margin-bottom:15px;line-height:1.8}
+.agro-export .section-tag{background:rgba(255,255,255,.12);color:#bcecff}
+.agro-note{font-size:.92rem!important}
+.agro-export-panel{padding:34px;border:1px solid rgba(255,255,255,.18);border-radius:18px;background:rgba(255,255,255,.08);box-shadow:0 22px 60px rgba(0,0,0,.16);backdrop-filter:blur(10px)}
+.agro-panel-label{display:block;color:#a9e5fa;font-size:.76rem;font-weight:800;letter-spacing:.13em;margin-bottom:18px}
+.agro-export-panel ul{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.agro-export-panel li{display:flex;align-items:center;gap:10px;color:#fff;font-weight:600}
+.agro-export-panel li i{color:#7dd6b0}
+.agro-export-panel>p{margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.76);font-size:.9rem;line-height:1.7}
+.form-privacy-note{font-size:.84rem;color:#687989;line-height:1.55;margin:0 0 16px}
+.quote-form .form-group{margin-bottom:14px}
+.quote-form textarea{min-height:92px}
+.quote-form .btn-block{min-height:54px}
+@media(max-width:768px){.agro-export-grid{grid-template-columns:1fr;gap:30px}.agro-export-panel{padding:26px 22px}.hero-location{border-radius:12px;line-height:1.5}.hero-buttons .btn{width:100%}}
+@media(max-width:420px){.agro-export-panel ul{grid-template-columns:1fr 1fr;gap:14px 8px}.agro-export-panel li{font-size:.9rem}}
