@@ -1576,3 +1576,52 @@ body { color: var(--text); }
     .service-card, .service-image img, .contact-card { transition: none; }
     .service-card:hover, .contact-card:hover { transform: none; }
 }
+
+
+/* Mobile header alignment: keep logo, quote button and menu on one row */
+@media (max-width: 768px) {
+    .header .container {
+        min-height: 76px;
+        display: block;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .navbar {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 76px;
+        width: 100%;
+    }
+    .logo { flex: 0 1 auto; min-width: 0; }
+    .logo-image { width: 58px; height: 58px !important; }
+    .nav-actions {
+        display: flex;
+        flex: 0 0 auto;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-left: auto;
+    }
+    .nav-actions .btn {
+        display: inline-flex;
+        padding: 10px 14px;
+        min-height: 42px;
+        font-size: .82rem;
+        white-space: nowrap;
+    }
+    .hamburger { display: block; flex: 0 0 auto; padding: 8px; }
+    .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: -16px;
+        right: -16px;
+        z-index: 1001;
+        width: calc(100% + 32px);
+    }
+}
