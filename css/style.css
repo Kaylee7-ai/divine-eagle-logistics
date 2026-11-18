@@ -1428,3 +1428,151 @@ body { color: var(--text); }
 @media (prefers-reduced-motion: reduce) {
     .service-card::after { transition: none; }
 }
+
+
+/* ---------- Visual upgrade: real logistics photography ---------- */
+.services {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 8% 12%, rgba(8,121,189,.055), transparent 24rem),
+        #ffffff;
+}
+.services-grid { align-items: stretch; }
+.service-card {
+    padding: 0 0 25px;
+    background: #fff;
+    border: 1px solid #e3ebf1;
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(7,29,51,.065);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 48px rgba(7,29,51,.14);
+}
+.service-image {
+    position: relative;
+    height: 190px;
+    overflow: hidden;
+    margin: 0 0 22px;
+    border-radius: 15px 15px 0 0;
+    background: #e7eef3;
+}
+.service-image::after {
+    content: "";
+    position: absolute;
+    inset: 45% 0 0;
+    background: linear-gradient(0deg, rgba(5,24,42,.34), transparent);
+    pointer-events: none;
+}
+.service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .65s cubic-bezier(.2,.7,.2,1);
+}
+.service-card:hover .service-image img { transform: scale(1.07); }
+.service-card .service-icon,
+.service-card h3,
+.service-card p,
+.service-card .service-link {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+.service-card .service-icon {
+    width: 46px;
+    height: 46px;
+    margin-top: -1px;
+    margin-bottom: 15px;
+    border-radius: 11px;
+    font-size: 1.15rem;
+}
+.service-card h3 { font-size: 1.08rem; margin-bottom: 9px; }
+.service-card p { margin-bottom: 0; min-height: 74px; line-height: 1.7; }
+
+.about-image {
+    position: relative;
+    min-height: 520px;
+    border-radius: 20px;
+}
+.about-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 24px 60px rgba(7,29,51,.18);
+}
+.about-image::after {
+    content: "";
+    position: absolute;
+    inset: 35% 0 0;
+    border-radius: 0 0 20px 20px;
+    background: linear-gradient(0deg, rgba(4,19,33,.56), transparent);
+    pointer-events: none;
+}
+.about-card {
+    position: absolute;
+    z-index: 1;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    padding: 27px 30px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(7,29,51,.91);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 18px 50px rgba(0,0,0,.22);
+}
+.about-card-icon { display: none; }
+.about-card h3 { font-size: 1.25rem; margin-bottom: 15px; }
+.about-card ul { grid-template-columns: 1fr 1fr; gap: 11px 18px; }
+.about-card li { font-size: .88rem; line-height: 1.45; }
+
+.hero {
+    background-position: center 52%;
+}
+.hero-badge {
+    border-color: rgba(255,255,255,.35);
+    background: rgba(255,255,255,.1);
+    backdrop-filter: blur(8px);
+}
+.section-header { position: relative; }
+.section-header h2 { max-width: 760px; margin-left: auto; margin-right: auto; }
+.section-header::after {
+    content: "";
+    display: block;
+    width: 54px;
+    height: 3px;
+    margin: 20px auto 0;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #0879bd, #53c5e8);
+}
+.quick-track { background: linear-gradient(180deg,#f1f6f9 0%,#fff 100%); }
+.track-box { border-top: 4px solid #0879bd; }
+.quote-form-wrapper { border-top: 4px solid #0879bd; }
+.contact-card { transition: transform .25s ease, box-shadow .25s ease; }
+.contact-card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(7,29,51,.1); }
+
+@media (max-width: 768px) {
+    .service-image { height: 175px; }
+    .service-card { padding-bottom: 22px; }
+    .service-card .service-icon,
+    .service-card h3,
+    .service-card p,
+    .service-card .service-link { margin-left: 21px; margin-right: 21px; }
+    .service-card p { min-height: 0; }
+    .about-image { min-height: 500px; }
+    .about-card { left: 14px; right: 14px; bottom: 14px; padding: 22px 20px; }
+    .about-card ul { grid-template-columns: 1fr; gap: 9px; }
+}
+@media (max-width: 480px) {
+    .service-image { height: 205px; }
+    .about-image { min-height: 560px; }
+    .about-card { padding: 20px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .service-card, .service-image img, .contact-card { transition: none; }
+    .service-card:hover, .contact-card:hover { transform: none; }
+}
